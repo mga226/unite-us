@@ -26,7 +26,6 @@ try {
     $output = $StringReformatter->reformat($input);
 
     println($output);
-
 } catch (Exception $e) {
     println('Oh boy, something went wrong:');
     println(' > '.$e->getMessage());

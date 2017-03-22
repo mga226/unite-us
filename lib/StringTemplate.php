@@ -9,7 +9,8 @@
  *   echo $template->parse(['oops' => 'world']); //  --> "Hello, {name}."
  *
  */
-interface StringTemplateInterface {
+interface StringTemplateInterface
+{
     public function setTemplate($template);
     public function parse(array $data);
 }
@@ -17,8 +18,8 @@ interface StringTemplateInterface {
 /**
  * Super-basic implementation of the StringTemplateInterface
  */
-class BasicStringTemplate implements StringTemplateInterface {
-
+class BasicStringTemplate implements StringTemplateInterface
+{
     protected $template = '';
 
     /**
@@ -26,7 +27,8 @@ class BasicStringTemplate implements StringTemplateInterface {
      * content specified like this: Hello {world}.
      * @param string $template
      */
-    public function setTemplate($template) {
+    public function setTemplate($template)
+    {
         if (!is_string($template)) {
             throw new Exception('Template must be a string.');
         }
@@ -37,7 +39,8 @@ class BasicStringTemplate implements StringTemplateInterface {
      * @param  string[]  $data
      * @return  string
      */
-    public function parse(array $data) {
+    public function parse(array $data)
+    {
         $parsed_template = $this->template;
         foreach ($data as $key => $value) {
             if (!is_string($value)) {
@@ -54,8 +57,10 @@ class BasicStringTemplate implements StringTemplateInterface {
  * for now this controls what class gets instantiated when we want an
  * implementation of StringTemplateInterface.
  */
-class StringTemplateFactory{
-    public static function create(){
+class StringTemplateFactory
+{
+    public static function create()
+    {
         return new BasicStringTemplate(); // change this line to use a different parser.
     }
 }

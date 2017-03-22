@@ -5,6 +5,7 @@
  * @param  string $output
  * @return  string
  */
-function println($output) {
+function println($output)
+{
     echo $output . "\n";
 }

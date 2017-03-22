@@ -38,7 +38,8 @@
  *    ]);
  *
  */
-class CsvStringReformatter {
+class CsvStringReformatter
+{
 
     /**
      * Array of field labels to by used when parsing CSV input
@@ -72,17 +73,18 @@ class CsvStringReformatter {
     protected $sort_by;
 
 
-    public function __construct(array $settings = array()) {
+    public function __construct(array $settings = array())
+    {
         $this->configure($settings);
-     }
+    }
 
      /**
       * Sets configuration based on settings provided.
       *
       * @param  array[]  $settings
       */
-     public function configure(array $settings) {
-
+     public function configure(array $settings)
+     {
          if (isset($settings['input_columns'])) {
              $this->setInputColumns($settings['input_columns']);
          }
@@ -105,18 +107,19 @@ class CsvStringReformatter {
       *
       * @param string[] $columns
       */
-     public function setInputColumns(array $columns) {
+     public function setInputColumns(array $columns)
+     {
 
          // Confirm that headers is an array of strings.
          foreach ($columns as $column) {
              if (!is_string($column)) {
-                throw new Exception('Your columns must be strings!');
+                 throw new Exception('Your columns must be strings!');
              }
          }
 
          // If this invalidates the 'sort_by' field, clear it.
          // (Now we won't sort unless we set a new 'sort_by' field.)
-         if($this->sort_by && !in_array($this->sort_by, $columns)) {
+         if ($this->sort_by && !in_array($this->sort_by, $columns)) {
              $this->sort_by = null;
          }
 
@@ -130,7 +133,8 @@ class CsvStringReformatter {
       *
       * @param string $header
       */
-     public function setHeader($header = null) {
+     public function setHeader($header = null)
+     {
          if (is_null($header)) {
              $this->header = $header;
              return;
@@ -146,11 +150,12 @@ class CsvStringReformatter {
       *
       * @param string $template
       */
-     public function setRowTemplate($template) {
-        if (!$this->row_template) {
-            $this->row_template = StringTemplateFactory::create();
-        }
-        $this->row_template->setTemplate($template);
+     public function setRowTemplate($template)
+     {
+         if (!$this->row_template) {
+             $this->row_template = StringTemplateFactory::create();
+         }
+         $this->row_template->setTemplate($template);
      }
 
      /**
@@ -163,7 +168,8 @@ class CsvStringReformatter {
       *
       * @param string $field
       */
-     public function setSortBy($field = null) {
+     public function setSortBy($field = null)
+     {
          if (is_null($field)) {
              $this->sort_by = $field;
              return;
@@ -183,7 +189,8 @@ class CsvStringReformatter {
       * @param  string $input
       * @return  string
       */
-     public function reformat($input) {
+     public function reformat($input)
+     {
 
          // Make sure we're ready!
          if (!$this->input_columns) {
@@ -232,7 +239,8 @@ class CsvStringReformatter {
       * @param  string $input
       * @return  array[] as above
       */
-    protected function inputToArray($input) {
+    protected function inputToArray($input)
+    {
         $input_lines = explode("\n", trim($input));
         $data = array();
         foreach ($input_lines as $line) {
@@ -243,7 +251,7 @@ class CsvStringReformatter {
             }
             $cells = preg_split('/\s*,\s*/', $line);
             if (count($cells) !== count($this->input_columns)) {
-                 throw new Exception('Your input data is malformed :/');
+                throw new Exception('Your input data is malformed :/');
             }
             $data[] = array_combine($this->input_columns, $cells);
         }
@@ -251,7 +259,7 @@ class CsvStringReformatter {
         $data = $this->sortData($data);
 
         return $data;
-     }
+    }
 
      /**
       * Sort the provided data by the current "sort_by" field, if any.
@@ -259,10 +267,10 @@ class CsvStringReformatter {
       * @param  array $data
       * @return  array
       */
-     protected function sortData($data) {
-
+     protected function sortData($data)
+     {
          if ($sort_by = $this->sort_by) {
-             usort($data, function($a, $b) use ($sort_by) {
+             usort($data, function ($a, $b) use ($sort_by) {
                  if ($a[$sort_by] < $b[$sort_by]) {
                      return -1;
                  }
