@@ -6,8 +6,18 @@ I decided to build something a little more generic and allow it to be configured
 
 I wrote a stupidly-simple template class to make this configuration possible, and hid the instantiation of it behind a factory method, so it can be subbed out for a more robust implementation if needed.
 
-You'll need PHP installed locally to run it. From the command line, just navigate to the root directory of the project (the directory this file is in!) and run:
+# Running the code
+
+Requires PHP 7.1, because I wanted to play with nullable types and void functions.
+
+From the command line, just navigate to the root directory of the project (the directory this file is in!) and run:
 
 ```
-php demo.php
+$ php demo.php
+```
+
+There's some basic tests, which you can run like this:
+
+```
+$ php phpunit.phar --bootstrap autoload.php tests
 ```

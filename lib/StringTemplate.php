@@ -11,8 +11,8 @@
  */
 interface StringTemplateInterface
 {
-    public function setTemplate($template);
-    public function parse(array $data);
+    public function setTemplate(string $template) : void;
+    public function parse(array $data) : string;
 }
 
 /**
@@ -20,6 +20,9 @@ interface StringTemplateInterface
  */
 class BasicStringTemplate implements StringTemplateInterface
 {
+    /**
+     * @var string
+     */
     protected $template = '';
 
     /**
@@ -27,11 +30,8 @@ class BasicStringTemplate implements StringTemplateInterface
      * content specified like this: Hello {world}.
      * @param string $template
      */
-    public function setTemplate($template)
+    public function setTemplate(string $template) : void
     {
-        if (!is_string($template)) {
-            throw new Exception('Template must be a string.');
-        }
         $this->template = $template;
     }
 
@@ -39,7 +39,7 @@ class BasicStringTemplate implements StringTemplateInterface
      * @param  string[]  $data
      * @return  string
      */
-    public function parse(array $data)
+    public function parse(array $data) : string
     {
         $parsed_template = $this->template;
         foreach ($data as $key => $value) {
@@ -59,7 +59,7 @@ class BasicStringTemplate implements StringTemplateInterface
  */
 class StringTemplateFactory
 {
-    public static function create()
+    public static function create() : StringTemplateInterface
     {
         return new BasicStringTemplate(); // change this line to use a different parser.
     }
